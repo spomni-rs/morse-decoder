@@ -1,4 +1,4 @@
-const MORSE_TABLE = {
+const LETTERS_TABLE = {
     '.-':     'a',
     '-...':   'b',
     '-.-.':   'c',
@@ -47,21 +47,20 @@ SYMBOLS_TABLE = {
 
 function decode(expr) {
   
-  let letters = expr.match(/.{10}/g);
-  
-  letters = letters.map((curLetter) => {
-    let symbols = curLetter.match(/.{2}/g);
-    symbols = symbols.map((curSymbol) => {
-      return SYMBOLS_TABLE[curSymbol];
-    })
+  return expr
+    .match(/.{10}/g) // letters bin codes array
+    .map((binCode) => {
     
-    let code = symbols.join('');
+      code = binCode
+        .match(/.{2}/g) // symbols bin codes array
+        .map((binSymbol) => {
+          return SYMBOLS_TABLE[binSymbol];
+        }) // symbols array
+        .join('');
     
-    return MORSE_TABLE[code];
-  });
-  
-  
-  return letters.join('');
+      return LETTERS_TABLE[code];
+    }) // letters array
+    .join('');
 }
 
 module.exports = {
